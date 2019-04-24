@@ -15,7 +15,7 @@ public class DriveTrain extends Subsystem {
   private DifferentialDrive _diffDrive = new DifferentialDrive(_leftFront, _rightFront);
   private double rightGoverned = 0.0;
   private double leftGoverned = 0.0;
-  private double motor_gain = 0.5; //TODO: Set Motor Gain
+  private double motor_gain = .5; //TODO: Set Motor Gain
 
   public DriveTrain() {
     _rightFront.setInverted(false); //TODO: Confirm Inversion
