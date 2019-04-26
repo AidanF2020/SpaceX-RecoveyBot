@@ -6,19 +6,28 @@ import frc.robot.OI;
 import frc.robot.Robot;
 
 public class TankDrive extends Command {
-	private Joystick js = Robot.m_oi.getBaseJoystick();
+	private Joystick js = null;
 	private double right = 0.0;
 	private double left = 0.0;
+	private boolean boost = false;
 
 	public TankDrive() {
 		requires(Robot.m_drive_train);
 	}
 
+	@Override
+	protected void initialize() {
+
+		js = Robot.m_oi.getBaseJoystick();
+	}
+
 	@Override protected void execute() {
+
 		right = js.getRawAxis(OI.rightStick);
 		left = js.getRawAxis(OI.leftStick);
+		boost = js.getRawButton(OI.rightBumper);
 
-		Robot.m_drive_train.tankDriveByJoystick(left, right);
+		Robot.m_drive_train.tankDriveByJoystick(left, right, boost);
 	}
 
 	@Override protected boolean isFinished() {

@@ -24,6 +24,7 @@ public class DriveTrain extends Subsystem {
     _leftRear.setInverted(false); //TODO: Confirm Inversion
     _rightRear.follow(_rightFront);
     _leftRear.follow(_leftFront);
+
   }
 
   @Override
@@ -36,7 +37,13 @@ public class DriveTrain extends Subsystem {
     _leftFront.set(0);
   }
   
-  public void tankDriveByJoystick(double left, double right) {
+  public void tankDriveByJoystick(double left, double right, boolean boost) {
+
+    if (boost)
+      motor_gain = 1;
+    else
+      motor_gain = .5;
+
     if (left < 0)
       leftGoverned = (left * left) * -motor_gain;
     else 
