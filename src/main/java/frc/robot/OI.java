@@ -9,6 +9,7 @@ public class OI {
   public static int RXAxis = 2;
   public static int rightStick = 3; //aka RYAxis
   public static int rightBumper = 6;
+  public static int BButton = 3;
   public Joystick base = new Joystick(baseJoystickPort);
 	
 	public OI() {

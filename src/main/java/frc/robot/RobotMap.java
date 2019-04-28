@@ -7,4 +7,6 @@ public class RobotMap {
 	public static int right_back_motor_port = 3; //TODO: Confirm Motor Port
 	public static int left_front_motor_port = 4; //TODO: Confirm Motor Port
 	public static int left_back_motor_port = 2; //TODO: Confirm Motor Port
+
+	public static int PWM_GRINDER = 9;
 }

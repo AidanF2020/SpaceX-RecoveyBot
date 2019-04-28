@@ -12,6 +12,7 @@ public class DriveTrain extends Subsystem {
   private CANSparkMax _rightRear = new CANSparkMax(RobotMap.right_back_motor_port, MotorType.kBrushless);
   private CANSparkMax _leftFront = new CANSparkMax(RobotMap.left_front_motor_port, MotorType.kBrushless);
   private CANSparkMax _leftRear = new CANSparkMax(RobotMap.left_back_motor_port, MotorType.kBrushless);
+
   private DifferentialDrive _diffDrive = new DifferentialDrive(_leftFront, _rightFront);
   private double rightGoverned = 0.0;
   private double leftGoverned = 0.0;
@@ -24,6 +25,12 @@ public class DriveTrain extends Subsystem {
     _leftRear.setInverted(false); //TODO: Confirm Inversion
     _rightRear.follow(_rightFront);
     _leftRear.follow(_leftFront);
+
+    _rightFront.setSmartCurrentLimit(60, 80);
+    _rightRear.setSmartCurrentLimit(60, 80);
+    _leftFront.setSmartCurrentLimit(60, 80);
+    _leftRear.setSmartCurrentLimit(60, 80);
+
 
   }
 
