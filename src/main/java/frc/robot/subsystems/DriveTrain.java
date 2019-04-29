@@ -17,6 +17,7 @@ public class DriveTrain extends Subsystem {
   private double rightGoverned = 0.0;
   private double leftGoverned = 0.0;
   private double motor_gain = .5; //TODO: Set Motor Gain
+  private static final double kRampRate = 0.75; //sec to full speed
 
   public DriveTrain() {
     _rightFront.setInverted(false); //TODO: Confirm Inversion
@@ -31,6 +32,10 @@ public class DriveTrain extends Subsystem {
     _leftFront.setSmartCurrentLimit(60, 80);
     _leftRear.setSmartCurrentLimit(60, 80);
 
+    _rightFront.setOpenLoopRampRate(kRampRate);
+    _rightRear.setOpenLoopRampRate(kRampRate);
+    _leftFront.setOpenLoopRampRate(kRampRate);
+    _leftRear.setOpenLoopRampRate(kRampRate);
 
   }
 
