@@ -24,10 +24,18 @@ public class AngleGrinder extends Subsystem {
   private Servo m_grinderESC = new Servo(RobotMap.PWM_GRINDER);
   private double m_lastCmd = 0; //memory state for cmd ramping
   private static double CMD_INC = 0.02; // max positive change per cycle
+  private static final double kMinHV120PWM = 1.0;
+  private static final double kMaxHV120PWM = 2.0;
+  //Servo default PWM is 0.6-2.4 ms Pulses.  Slope = 2.4-0.6=1.5
+  //Finding new constants to map this to the HV120
+  private static final double kBias = (kMinHV120PWM-0.6) / 1.8;
+  private static final double kSlope = (kMaxHV120PWM-0.6) / 1.8 - kBias;
 
-
-  public void AngleGrinder() {
-
+  public AngleGrinder() {
+      //set PWM range from 1.0 to 2.0 ms pulses
+      //TODO: this is what the servo class does to set the pulses
+      //  Should we do this instead of the mpping in serServo?
+      //m_grinderESC.setBounds(kMaxHV120PWM, 0, 0, 0, kMinHV120PWM);
   }
 
   @Override
@@ -36,19 +44,22 @@ public class AngleGrinder extends Subsystem {
   }
 
   public void setServo(double output) {
+    //Implement mapping
+    double outputHV120 = kSlope * output + kBias;
+
     //Limit the rise rate to CMD_INC/cycle
     double max_cmd = m_lastCmd + CMD_INC;
-    if (output > max_cmd) {
-      output = max_cmd;
+    if (outputHV120 > max_cmd) {
+      outputHV120 = max_cmd;
     }
     //update the motor controller
-    m_grinderESC.set(output);
+    m_grinderESC.set(outputHV120);
     //remember the output for the next pass
-    m_lastCmd = output;
+    m_lastCmd = outputHV120;
 
   }
 
   public void stopGrinding() {
-    m_grinderESC.set(0);
+    setServo(0);
   }
 }
