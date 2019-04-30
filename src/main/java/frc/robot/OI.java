@@ -10,6 +10,8 @@ public class OI {
   public static int rightStick = 3; //aka RYAxis
   public static int rightBumper = 6;
   public static int BButton = 3;
+  public static final int leftBumper = 5;
+  
   public Joystick base = new Joystick(baseJoystickPort);
 	
 	public OI() {

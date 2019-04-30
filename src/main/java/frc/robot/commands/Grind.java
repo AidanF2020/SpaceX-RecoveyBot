@@ -33,7 +33,7 @@ public Grind() {
 
     //We think it needs a 20ms on pulse to enable
     Robot.m_grinder.setServo(1.0);
-    
+    /*
     try {
         Thread.sleep(20);
 
@@ -43,7 +43,7 @@ public Grind() {
     //Off-pulse after 20ms
     Robot.m_grinder.setServo(0);
     System.out.print("Done Initialize Grinder\n");
-
+    */
 
   }
 

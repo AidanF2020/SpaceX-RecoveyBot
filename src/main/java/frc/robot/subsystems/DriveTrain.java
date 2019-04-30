@@ -49,12 +49,8 @@ public class DriveTrain extends Subsystem {
     _leftFront.set(0);
   }
   
-  public void tankDriveByJoystick(double left, double right, boolean boost) {
-
-    if (boost)
-      motor_gain = 1;
-    else
-      motor_gain = .5;
+  public void tankDriveByJoystick(double left, double right, double motor_gain) {
+    //NOTE: motor gain should be on (0,1]
 
     if (left < 0)
       leftGoverned = (left * left) * -motor_gain;

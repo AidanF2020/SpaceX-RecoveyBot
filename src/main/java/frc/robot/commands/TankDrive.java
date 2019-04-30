@@ -9,7 +9,6 @@ public class TankDrive extends Command {
 	private Joystick js = null;
 	private double right = 0.0;
 	private double left = 0.0;
-	private boolean boost = false;
 
 	public TankDrive() {
 		requires(Robot.m_drive_train);
@@ -25,9 +24,15 @@ public class TankDrive extends Command {
 
 		right = js.getRawAxis(OI.rightStick);
 		left = js.getRawAxis(OI.leftStick);
-		boost = js.getRawButton(OI.rightBumper);
+		boolean turbo = js.getRawButton(OI.rightBumper);
+		boolean boost = js.getRawButton(OI.leftBumper);
+		double motor_gain = 0.5; //50% power
+		if (turbo)
+			motor_gain = 1; //turbo = full power
+		else if (boost)
+			motor_gain = 0.75; // 0.75 power
 
-		Robot.m_drive_train.tankDriveByJoystick(left, right, boost);
+		Robot.m_drive_train.tankDriveByJoystick(left, right, motor_gain);
 	}
 
 	@Override protected boolean isFinished() {
