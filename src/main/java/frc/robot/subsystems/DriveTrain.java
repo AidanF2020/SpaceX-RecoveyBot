@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -36,6 +37,11 @@ public class DriveTrain extends Subsystem {
     _rightRear.setOpenLoopRampRate(kRampRate);
     _leftFront.setOpenLoopRampRate(kRampRate);
     _leftRear.setOpenLoopRampRate(kRampRate);
+
+    _rightFront.setIdleMode(IdleMode.kBrake);
+    _rightRear.setIdleMode(IdleMode.kBrake);
+    _leftFront.setIdleMode(IdleMode.kBrake);
+    _leftRear.setIdleMode(IdleMode.kBrake);
 
   }
 
