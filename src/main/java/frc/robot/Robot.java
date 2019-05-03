@@ -3,18 +3,21 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.periodictasks.DashboardUpdater;
 import frc.robot.subsystems.AngleGrinder;
 import frc.robot.subsystems.DriveTrain;
 
 public class Robot extends TimedRobot {
   public static AngleGrinder m_grinder = new AngleGrinder();
   public static DriveTrain m_drive_train = new DriveTrain();
-  public static OI m_oi;
+  public static OI m_oi = new OI();;
+  private static DashboardUpdater _dbUpdater = new DashboardUpdater();
   Command m_autonomousCommand;
 
   @Override
   public void robotInit() {
-    m_oi = new OI();
+    //Start updating the dashboard
+    _dbUpdater.run();
   }
 
   @Override

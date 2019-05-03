@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
-public class TankDrive extends Command {
+public class Drive extends Command {
 	private Joystick js = null;
 	private double right = 0.0;
 	private double left = 0.0;
 
-	public TankDrive() {
+	public Drive() {
 		requires(Robot.m_drive_train);
 	}
 

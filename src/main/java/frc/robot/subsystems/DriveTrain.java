@@ -5,7 +5,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
-import frc.robot.commands.TankDrive;
+import frc.robot.commands.Drive;
 
 public class DriveTrain extends Subsystem {
   private CANSparkMax _rightFront = new CANSparkMax(RobotMap.right_front_motor_port, MotorType.kBrushless);
@@ -16,14 +16,13 @@ public class DriveTrain extends Subsystem {
   private DifferentialDrive _diffDrive = new DifferentialDrive(_leftFront, _rightFront);
   private double rightGoverned = 0.0;
   private double leftGoverned = 0.0;
-  private double motor_gain = .5; //TODO: Set Motor Gain
   private static final double kRampRate = 0.75; //sec to full speed
 
   public DriveTrain() {
-    _rightFront.setInverted(false); //TODO: Confirm Inversion
-    _leftFront.setInverted(false); //TODO: Confirm Inversion
-    _rightRear.setInverted(false); //TODO: Confirm Inversion
-    _leftRear.setInverted(false); //TODO: Confirm Inversion
+    _rightFront.setInverted(false);
+    _leftFront.setInverted(false);
+    _rightRear.setInverted(false);
+    _leftRear.setInverted(false);
     _rightRear.follow(_rightFront);
     _leftRear.follow(_leftFront);
 
@@ -41,7 +40,7 @@ public class DriveTrain extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new TankDrive());
+    setDefaultCommand(new Drive());
   }
 
   public void drivetrainStop() {
@@ -63,5 +62,35 @@ public class DriveTrain extends Subsystem {
       rightGoverned = (right * right) * motor_gain;
 
     _diffDrive.tankDrive(leftGoverned, rightGoverned);
-	}
+  }
+  
+  /**
+   * Get current from all the motors.  Order: leftFront, leftRear,
+   *  rightFront, rightRear
+   * @return array of current [A]
+   */
+  public double[] getMotorCurrent() {
+    double[] current = new double[4];
+    current[0] = _leftFront.getOutputCurrent();
+    current[1] = _leftRear.getOutputCurrent();
+    current[2] = _rightFront.getOutputCurrent();
+    current[3] = _rightRear.getOutputCurrent();
+
+    return current;
+  }
+
+  /**
+   * Get temperature from all the motors.  Order: leftFront, leftRear,
+   *  rightFront, rightRear
+   * @return array of temp [C]
+   */
+  public double[] getMotorTemps() {
+    double[] temp = new double[4];
+    temp[0] = _leftFront.getMotorTemperature();
+    temp[1] = _leftRear.getMotorTemperature();
+    temp[2] = _rightFront.getMotorTemperature();
+    temp[3] = _rightRear.getMotorTemperature();
+
+    return temp;
+  }
 }
